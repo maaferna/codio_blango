@@ -185,4 +185,45 @@ PASSWORD_HASHERS = [
 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
+CACHES = {
+"default": {
+"BACKEND":
+"django.core.cache.backends.db.DatabaseCache",
+"LOCATION": "my_cache_table",
+}
+}
+
+
+'''
+# Filesystem Caching
+CACHES = {
+	"default": {
+		"BACKEND":
+		"django.core.cache.backends.filebased.FileBasedCache",
+		"LOCATION": "/var/tmp/django_cache",
+	}
+}
+
+# Local-memory Caching
+
+CACHES = {
+	"default": {
+		"BACKEND":
+		"django.core.cache.backends.locmem.LocMemCache",
+		"LOCATION": "unique-snowflake",
+}
+}
+
+# Dummy Caching
+
+CACHES = {
+"default": {
+"BACKEND":
+"django.core.cache.backends.dummy.DummyCache",
+}
+}
+
+'''
+
+
 

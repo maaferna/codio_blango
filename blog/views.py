@@ -3,9 +3,38 @@ from blog.models import Post
 from django.shortcuts import render, get_object_or_404, redirect
 from blog.forms import CommentForm
 # Create your views here.
+import logging
 
+logger = logging.getLogger(__name__)
+
+def logger_examples():
+
+	username = "mafparra"
+	email = "mafernandezparra@gmail.com"
+
+	logger.debug("This is a debug message")
+	logger.info("This is an info message")
+	logger.warning("This is a warning message")
+	logger.error("This is an error message")
+	logger.critical("This is a critical message")
+
+	logger.debug("Created user %s with email %s" % (username,
+	email))
+	logger.debug("Created user %s with email %s", username, email)
+
+	logger.log(logging.DEBUG, "Created user %s with email %s",username, email)
+	
+	try:
+		answer = 9 / 0
+		print(f"The answer is: {answer}")
+		raise_exception()
+	except ZeroDivisionError:
+		logger.exception("A divide by zero exception occured")	
+	
 def index(request):
     posts = Post.objects.filter(published_at__lte=timezone.now())
+    logger_examples()
+    logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
 
 def post_detail(request, slug):
@@ -21,6 +50,7 @@ def post_detail(request, slug):
                 comment.content_object = post
                 comment.creator = request.user
                 comment.save()
+                logger.info("Created comment on Post %d for user %s", post.pk,request.user)
                 return redirect(request.path_info)
         else:
             comment_form = CommentForm()

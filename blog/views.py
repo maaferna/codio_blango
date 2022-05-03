@@ -29,11 +29,29 @@ def logger_examples():
 		print(f"The answer is: {answer}")
 		raise_exception()
 	except ZeroDivisionError:
-		logger.exception("A divide by zero exception occured")	
+		logger.exception("A divide by zero exception occured")
+		
+
+def security_psw():
+	import hashlib
+	print(hashlib.sha256(b"password").hexdigest())
+	print(hashlib.sha256(b"hello wold").hexdigest())
+	print(hashlib.sha256(b"password123").hexdigest())
+	print("")
+	print(hashlib.sha256(b"abc123" + b"password123").hexdigest())
+	print("re-hashing")
+	
+	hash = hashlib.sha256(b"abc123" + b"password123").hexdigest()
+	for i in range(1000):
+		hash = hashlib.sha256(b"abc123" + hash.encode('ascii')).hexdigest()
+	print(hash)
 	
 def index(request):
     posts = Post.objects.filter(published_at__lte=timezone.now())
     logger_examples()
+    print("")
+    security_psw()
+    print("")
     logger.debug("Got %d posts", len(posts))
     return render(request, "blog/index.html", {"posts": posts})
 

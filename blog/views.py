@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from blog.forms import CommentForm
 # Create your views here.
 import logging
+from django.views.decorators.cache import cache_page
 
 logger = logging.getLogger(__name__)
 
@@ -45,15 +46,19 @@ def security_psw():
 	for i in range(1000):
 		hash = hashlib.sha256(b"abc123" + hash.encode('ascii')).hexdigest()
 	print(hash)
-	
+
+
+@cache_page(300)	
 def index(request):
-    posts = Post.objects.filter(published_at__lte=timezone.now())
-    logger_examples()
-    print("")
-    security_psw()
-    print("")
-    logger.debug("Got %d posts", len(posts))
-    return render(request, "blog/index.html", {"posts": posts})
+	from django.http import HttpResponse
+	return HttpResponse(str(request.user).encode("ascii"))
+	posts = Post.objects.filter(published_at__lte=timezone.now())
+	logger_examples()
+	print("")
+	security_psw()
+	print("")
+	logger.debug("Got %d posts", len(posts))
+	return render(request, "blog/index.html", {"posts": posts})
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)

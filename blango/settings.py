@@ -194,4 +194,36 @@ CACHES = {
 }
 
 
+'''
+# Filesystem Caching
+CACHES = {
+	"default": {
+		"BACKEND":
+		"django.core.cache.backends.filebased.FileBasedCache",
+		"LOCATION": "/var/tmp/django_cache",
+	}
+}
+
+# Local-memory Caching
+
+CACHES = {
+	"default": {
+		"BACKEND":
+		"django.core.cache.backends.locmem.LocMemCache",
+		"LOCATION": "unique-snowflake",
+}
+}
+
+# Dummy Caching
+
+CACHES = {
+"default": {
+"BACKEND":
+"django.core.cache.backends.dummy.DummyCache",
+}
+}
+
+'''
+
+
 

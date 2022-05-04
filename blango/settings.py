@@ -185,10 +185,13 @@ PASSWORD_HASHERS = [
 'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
 ]
 
+<<<<<<< HEAD
 from django.core.cache import caches
 
 default_cache = caches["default"]
 
+=======
+>>>>>>> 740d01850e6aaf8e58a9b2963b68753328ec2d3c
 CACHES = {
 "default": {
 "BACKEND":

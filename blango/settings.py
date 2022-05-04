@@ -49,10 +49,12 @@ INSTALLED_APPS = [
     'blog',
     'crispy_forms',
     'crispy_bootstrap5',
+    "debug_toolbar",
 ]
 
 MIDDLEWARE = [
-    'django.middleware.security.SecurityMiddleware',
+	"debug_toolbar.middleware.DebugToolbarMiddleware",
+	'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     #'django.middleware.csrf.CsrfViewMiddleware',
@@ -62,6 +64,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'blango.urls'
+
+# Finally we need to add an INTERNAL_IPS setting, to djDT
+INTERNAL_IPS = ["127.0.0.1"]
 
 TEMPLATES = [
     {
@@ -188,6 +193,10 @@ PASSWORD_HASHERS = [
 from django.core.cache import caches
 
 default_cache = caches["default"]
+
+
+from django.core.cache import cache
+# cache is the equivalent of caches["default"]/our default_cache variable
 
 CACHES = {
 "default": {

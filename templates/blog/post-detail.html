@@ -7,6 +7,16 @@
 {% load blog_extras cache %}
 {% load blog_extras %}
 {% block content %}
+
+{% if post.author.profile %}
+	{% row %}
+		{% col %}
+			<h4>About the author</h4>
+			<p>{{ post.author.profile.bio }}</p>
+		{% endcol %}
+	{% endrow %}
+{% endif %}
+
 <h2>{{ post.title }}</h2>
     {% row %}
         <div class="col">

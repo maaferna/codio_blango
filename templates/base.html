@@ -8,7 +8,7 @@
   </head>
   <body>
   	<div class="container-fluid bg-dark text-light">
-  	         
+
   	  <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
               <a class="navbar-brand" href="/">Blog Home</a>
@@ -17,15 +17,15 @@
                    	<a class="nav-link" href="{% url "profile"%}">Profile</a>
                   	<a class="nav-link" href="{% url "logout"%}">Log Out</a>
                   {% else %}
-                  	<a class="nav-link" href="{% url " django_registration_register" %}">Register</a>
-		   	<a class="nav-link" href="{% url " login" %}">Log In</a>
+                  	<a class="nav-link" href="{% url "django_registration_register" %}">Register</a>
+                    	<a class="nav-link" href="{% url "login" %}">Log In</a>
                   {% endif %}
                 </div>
               </div>
           </nav>
   	{% block content %}
     	<h1>Welcome to My Blog! (Marco Parra)</h1>
-          
+
 
           {% endblock %}
       </div>

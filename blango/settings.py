@@ -45,12 +45,17 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sites',
     'django.contrib.staticfiles',
     'blango_auth',
     'blog',
     'crispy_forms',
     'crispy_bootstrap5',
-    "debug_toolbar",
+    'debug_toolbar',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -242,3 +247,26 @@ AUTH_USER_MODEL = "blango_auth.User"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 ACCOUNT_ACTIVATION_DAYS = 7
 
+'''
+
+Next we need to add a setting so the Django knows which Site object our
+settings ﬁle applies to. Django will automatically create one when we next
+migrate , and we’ll only use this single Site object in Blango. The site will
+have the ID 1 so we need to add this setting:
+
+'''
+SITE_ID = 1
+
+
+
+'''
+Normally when Django Allauth creates a User object from a social account
+login, it will generate it a username based on the user ID at the third party.
+Since our custom User model doesn’t have a username ﬁeld, Django Allauth
+will fail, unless we make some settings changes
+
+'''
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"

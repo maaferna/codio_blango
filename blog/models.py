@@ -28,7 +28,7 @@ class Post(models.Model):
     modified_at = models.DateTimeField(auto_now=True)
     published_at = models.DateTimeField(blank=True, null=True, db_index=True)
     title = models.TextField(max_length=100)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
     summary = models.TextField(max_length=500)
     content = models.TextField()
     tags = models.ManyToManyField(Tag, related_name="posts")
@@ -41,6 +41,9 @@ class AuthorProfile(models.Model):
 	user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="profile")
 	bio = models.TextField()
 	
+	
 	def __str__(self):
 		return f"{self.__class__.__name__} object for {self.user}"
+		
+
 	

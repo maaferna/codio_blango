@@ -7,6 +7,11 @@ from django.views.decorators.csrf import csrf_exempt
 from blog.models import Post
 from blog.api.serializers import PostSerializer
 
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+
 '''
 
 def post_to_dict(post):
@@ -25,6 +30,7 @@ def post_to_dict(post):
 
 		
 @csrf_exempt
+@api_view(["GET", "POST"])
 def post_list(request):
 	if request.method == "GET":
 		posts = Post.objects.all()
@@ -32,18 +38,47 @@ def post_list(request):
 		#return JsonResponse({"data": posts_as_dict})
 		return JsonResponse({"data": PostSerializer(posts, many=True).data})
 	elif request.method == "POST":
+		serializer = PostSerializer(data=request.data)
+		if serializer.is_valid():
+			post = serializer.save()
+			return Response(status=HTTPStatus.CREATED, headers={"Location": reverse("api_post_detail",
+			args=(post.pk,))})
+		return Response(serializer.errors, status=HTTPStatus.BAD_REQUEST)	
+	
+	'''
 		post_data = json.loads(request.body)
-		#post = Post.objects.create(**post_data)
+		post = Post.objects.create(**post_data)
 		serializer = PostSerializer(data=post_data)
 		serializer.is_valid(raise_exception=True)
 		post = serializer.save()
-		return JsonResponse(PostSerializer(post).data)
-	
-	return HttpResponseNotAllowed(["GET", "POST"])
-	
+	'''	
+		
 	
 @csrf_exempt
+@api_view(["GET", "PUT", "DELETE"])
 def post_detail(request, pk):
+	try:
+		post = Post.objects.get(pk=pk)
+	except Post.DoesNotExist:
+		return Response(status=HTTPStatus.NOT_FOUND)
+		
+	if request.method == "GET":
+		return Response(PostSerializer(post).data)
+	elif request.method == "PUT":
+		serializer = PostSerializer(post, data=request.data)
+		if serializer.is_valid():
+			serializer.save()
+			return Response(status=HTTPStatus.NO_CONTENT)
+		return Response(serializer.errors, status=HTTPStatus.BAD_REQUEST)	
+	elif request.method == "DELETE":
+		post.delete()
+		return Response(status=HTTPStatus.NO_CONTENT)
+		
+	
+	
+
+
+	'''
 	post = get_object_or_404(Post, pk=pk)
 	
 	if request.method == "GET":
@@ -60,3 +95,5 @@ def post_detail(request, pk):
 		post.delete()
 		return HttpResponse(status=HTTPStatus.NO_CONTENT)
 	return HttpResponseNotAllowed(["GET", "PUT", "DELETE"])
+	
+	'''

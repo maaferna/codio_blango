@@ -37,13 +37,7 @@ def post_list(request):
 		serializer = PostSerializer(data=post_data)
 		serializer.is_valid(raise_exception=True)
 		post = serializer.save()
-		
-		posts_as_dict = [post_to_dict(p) for p in posts]
-		return JsonResponse({"data": posts_as_dict})
-	elif request.method == "POST":
-		post_data = json.loads(request.body)
-		post = Post.objects.create(**post_data)
-		return HttpResponse(status=HTTPStatus.CREATED,headers={"Location": reverse("api_post_detail", args=(post.pk,))},)
+		return JsonResponse(PostSerializer(post).data)
 	
 	return HttpResponseNotAllowed(["GET", "POST"])
 	

@@ -30,7 +30,7 @@ urlpatterns += [
     path("token-auth/", views.obtain_auth_token),
     re_path(r"^swagger(\.json|\.yaml)$",schema_view.without_ui(cache_timeout=0),name="schema-json",),
     path("swagger/",schema_view.with_ui("swagger", cache_timeout=0),name="schema-swagger-ui",),
-    #path(r'^', include(router.urls)),
+    #path('', include(router.urls)),
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

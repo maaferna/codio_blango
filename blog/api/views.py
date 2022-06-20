@@ -12,6 +12,9 @@ from blog.models import Post, Tag
 from blango_auth.models import User
 
 from django.utils.decorators import method_decorator
+from django.utils import timezone
+from django.db.models import Q 
+
 from django.views.decorators.cache import cache_page
 from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
@@ -42,16 +45,14 @@ class TagViewSet(viewsets.ModelViewSet):
         tag = self.get_object()
         post_serializer = PostSerializer(tag.posts, many=True, context={"request":request})
         return Response(post_serializer.data)
-    
+
     @method_decorator(cache_page(300))
     def list(self, *args, **kwargs):
         return super(TagViewSet, self).list(*args, **kwargs)
-    
+
     @method_decorator(cache_page(300))
     def retrieve(self, *args, **kwargs):
         return super(TagViewSet, self).retrieve(*args, **kwargs)
-
-
 
 class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
@@ -73,11 +74,21 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer = PostSerializer(posts, many=True, context={"request":request})
         return Response(serializer.data)
 
+    def get_queryset(self):            
+        if self.request.user.is_anonymous:
+            #published only
+            return self.queryset.filter(published_at__lte=timezone.now())
+        
+        if not self.request.user.is_staff:
+            #allow all
+            return self.queryset
+        
+        #filter for own or
+        return self.queryset.filter(Q(published_at__lte=timezone.now())| Q(author=self.request.user))
     
-    @method_decorator(cache_page(120))
+    @method_decorator(cache_page(300))
+    @method_decorator(vary_on_headers("Authorization", "Cookie"))
     def list(self, *args, **kwargs):
         return super(PostViewSet, self).list(*args, **kwargs)
-    
-
 
 

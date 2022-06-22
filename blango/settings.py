@@ -207,16 +207,17 @@ default_cache = caches["default"]
 from django.core.cache import cache
 # cache is the equivalent of caches["default"]/our default_cache variable
 
-CACHES = {
-"default": {
-"BACKEND":
-"django.core.cache.backends.db.DatabaseCache",
-"LOCATION": "my_cache_table",
-}
-}
+
 
 
 '''
+CACHES = {
+"default": {
+    "BACKEND":
+        "django.core.cache.backends.db.DatabaseCache",
+        "LOCATION": "my_cache_table",
+    }
+}
 # Filesystem Caching
 CACHES = {
 	"default": {
@@ -303,9 +304,8 @@ REST_FRAMEWORK = {
 }
 
 SWAGGER_SETTINGS = {
-"SECURITY_DEFINITIONS": {
-"Token": {"type": "apiKey", "name": "Authorization",
-"in": "header"},
-"Basic": {"type": "basic"},
+    "SECURITY_DEFINITIONS": {
+        "Token": {"type": "apiKey", "name": "Authorization","in": "header"},
+        "Basic": {"type": "basic"},
 }
 }

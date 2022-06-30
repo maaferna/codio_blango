@@ -7,6 +7,7 @@ from rest_framework.exceptions import PermissionDenied
 
 from blog.api.serializers import PostSerializer, UserSerializer, PostDetailSerializer, TagSerializer
 from blog.api.permissions import AuthorModifyOrReadOnly, IsAdminUserForObject
+from blog.api.filters import PostFilterSet
 
 from blog.models import Post, Tag
 from blango_auth.models import User
@@ -63,6 +64,8 @@ class TagViewSet(viewsets.ModelViewSet):
         return super(TagViewSet, self).retrieve(*args, **kwargs)
 
 class PostViewSet(viewsets.ModelViewSet):
+    ordering_fields = ["published_at", "author", "title","slug"]
+    filterset_class = PostFilterSet
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 

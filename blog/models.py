@@ -41,7 +41,9 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, related_name="posts")
     comments = GenericRelation(Comment)
 
-
+    class Meta:
+        ordering = ['id']
+        
     def __str__(self):
         return self.title
         

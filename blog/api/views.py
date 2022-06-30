@@ -64,8 +64,8 @@ class TagViewSet(viewsets.ModelViewSet):
         return super(TagViewSet, self).retrieve(*args, **kwargs)
 
 class PostViewSet(viewsets.ModelViewSet):
-    ordering_fields = ["published_at", "author", "title","slug"]
     filterset_class = PostFilterSet
+    ordering_fields = ["published_at", "author", "title","slug"]
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
@@ -75,8 +75,7 @@ class PostViewSet(viewsets.ModelViewSet):
         return PostDetailSerializer
     
     @method_decorator(cache_page(300))
-    @method_decorator(vary_on_headers("Authorization"))
-    @method_decorator(vary_on_cookie)
+    @method_decorator(vary_on_headers("Authorization", "Cookie"))
     @action(methods=["get"], detail=False, name="Posts by the logged in user")
     def mine(self, request):
         if request.user.is_anonymous:

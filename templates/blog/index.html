@@ -28,6 +28,9 @@
         {% col "border-bottom" %}<!--<div class="col">-->
             <h3>{{ post.title }}</h3>
             {% include "blog/post-byline.html" %}
+            {% if post.hero_image %}
+                <img src="{{ post.hero_image.thumbnail.100x100.url }}"/>
+            {% endif %}
             <p>{{ post.summary }}</p>
             <p>
                 ({{ post.content|wordcount }} words)
@@ -158,6 +161,7 @@
     <div class="col-xs-12 col-sm-2 col-md-2 bg-danger">Column 2</div>
     <div class="col bg-success">Column 3</div>
 </div>
+
 
 
 {% endblock %}

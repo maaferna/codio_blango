@@ -69,31 +69,6 @@ class PostViewSet(viewsets.ModelViewSet):
     permission_classes = [AuthorModifyOrReadOnly | IsAdminUserForObject]
     queryset = Post.objects.all()
 
-    def get_serializer_class(self):
-        if self.action in ("list", "create"):
-            return PostSerializer
-        return PostDetailSerializer
-    
-    @method_decorator(cache_page(300))
-    @method_decorator(vary_on_headers("Authorization", "Cookie"))
-    @action(methods=["get"], detail=False, name="Posts by the logged in user")
-    def mine(self, request):
-        if request.user.is_anonymous:
-            raise PermissionDenied("You must be logged in to see which Posts are yours")
-        #posts = self.queryset().filter(author=request.user)
-        #serializer = PostSerializer(posts, many=True, context={"request":request})
-        #return Response(serializer.data)
-        posts = self.get_queryset().filter(author=request.user) #add pagination option
-        page = self.paginate_queryset(posts)
-
-        if page is not None:
-            serializer = PostSerializer(page, many=True, context={"request":request})
-            return self.get_paginated_response(serializer.data)
-        
-        serializer = PostSerializer(posts, many=True, context={"request":request})
-        return Response(serializer.data)
-
-
     def get_queryset(self):
         '''
         if self.request.user.is_anonymous:
@@ -127,6 +102,31 @@ class PostViewSet(viewsets.ModelViewSet):
             return queryset.filter(published_at__gte=timezone.now() - timedelta(days=7))
         else:
             raise Http404(f"Time period {time_period_name} is not valid, should be "f"'new', 'today' or 'week'")
+
+    def get_serializer_class(self):
+        if self.action in ("list", "create"):
+            return PostSerializer
+        return PostDetailSerializer
+    
+    @method_decorator(cache_page(300))
+    @method_decorator(vary_on_headers("Authorization", "Cookie"))
+    @action(methods=["get"], detail=False, name="Posts by the logged in user")
+    def mine(self, request):
+        if request.user.is_anonymous:
+            raise PermissionDenied("You must be logged in to see which Posts are yours")
+        #posts = self.queryset().filter(author=request.user)
+        #serializer = PostSerializer(posts, many=True, context={"request":request})
+        #return Response(serializer.data)
+        posts = self.get_queryset().filter(author=request.user) #add pagination option
+        page = self.paginate_queryset(posts)
+
+        if page is not None:
+            serializer = PostSerializer(page, many=True, context={"request":request})
+            return self.get_paginated_response(serializer.data)
+        
+        serializer = PostSerializer(posts, many=True, context={"request":request})
+        return Response(serializer.data)
+   
     
     @method_decorator(cache_page(300))
     @method_decorator(vary_on_headers("Authorization", "Cookie"))

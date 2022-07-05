@@ -37,7 +37,8 @@ CSRF_COOKIE_SAMESITE = 'None'
 SESSION_COOKIE_SAMESITE = 'None'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = "bootstrap5"
-
+MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_URL = "/media/"
 # Application definition
 
 INSTALLED_APPS = [
@@ -61,6 +62,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'drf_yasg',
     'django_filters',
+    'versatileimagefield',
 ]
 
 MIDDLEWARE = [

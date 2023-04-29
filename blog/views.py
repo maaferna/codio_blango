@@ -26,14 +26,14 @@ def logger_examples():
 	logger.debug("Created user %s with email %s", username, email)
 
 	logger.log(logging.DEBUG, "Created user %s with email %s",username, email)
-	
+
 	try:
 		answer = 9 / 0
 		print(f"The answer is: {answer}")
 		raise_exception()
 	except ZeroDivisionError:
 		logger.exception("A divide by zero exception occured")
-		
+
 
 def security_psw():
 	import hashlib
@@ -43,7 +43,7 @@ def security_psw():
 	print("")
 	print(hashlib.sha256(b"abc123" + b"password123").hexdigest())
 	print("re-hashing")
-	
+
 	hash = hashlib.sha256(b"abc123" + b"password123").hexdigest()
 	for i in range(1000):
 		hash = hashlib.sha256(b"abc123" + hash.encode('ascii')).hexdigest()
@@ -58,27 +58,10 @@ def index(request):
 	return render(request, "blog/index.html", {"posts": posts})
 
 
-'''
-@cache_page(300)
-@vary_on_cookie	
-def index(request):
-	from django.http import HttpResponse
-	logger.debug("Index function is called!")
-	return HttpResponse(str(request.user).encode("ascii"))
-	posts = Post.objects.filter(published_at__lte=timezone.now())
-	logger_examples()
-	print("")
-	security_psw()
-	print("")
-	logger.debug("Got %d posts", len(posts))
-	return render(request, "blog/index.html", {"posts": posts})
-
-
-'''
 
 def post_detail(request, slug):
     post = get_object_or_404(Post, slug=slug)
-    
+
 
     if request.user.is_active:
         if request.method == "POST":
@@ -99,17 +82,15 @@ def post_detail(request, slug):
     return render(
         request, "blog/post-detail.html", {"post": post, "comment_form": comment_form}
     )
-    
-    
-   
+
+
+
 def get_ip(request):
 	from django.http import HttpResponse
 	return HttpResponse(request.META['REMOTE_ADDR'])
-	    
+
 
 def post_table(request):
 	return render(
         request, "blog/post-table.html", {"post_list_url": reverse("post-list")}
     )
-	    
-	    

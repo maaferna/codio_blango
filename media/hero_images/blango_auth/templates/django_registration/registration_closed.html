@@ -1,11 +1,10 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags blog_extras %}
-{% block title %}Register for My Blog{% endblock %}
+{% block title %}Registration Closed{% endblock %}
 {% block content %}
-<div class="container">
 {% row "justify-content-center" %}
-	<h2>Register for Blango</h2>
-		{% crispy form %}
+	{% col "col-md-6" %}
+		<h2>Registration is currently closed</h2>
+	{% endcol %}
 {% endrow %}
-</div>
 {% endblock %}

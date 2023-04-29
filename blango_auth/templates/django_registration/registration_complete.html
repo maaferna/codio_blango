@@ -1,11 +1,15 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags blog_extras %}
+{% load bootstrap5 %}
 {% block title %}Registration Successful{% endblock %}
 {% block content %}
-{% row "justify-content-center" %}
-	{% col "col-md-6" %}
-		<h2>Your registration was successful</h2>
-		<p>Check your email to validate your account.</p>
-	{% endcol %}
-{% endrow %}
+<div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.5); ">
+	{% row "justify-content-center" %}
+		{% col "col-md-8" %}
+			<h2>Your registration was successful</h2>
+			<p>Check your email to validate your account.</p>
+		{% endcol %}
+	{% endrow %}
+</div>
+
 {% endblock %}

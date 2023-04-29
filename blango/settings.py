@@ -63,6 +63,8 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'versatileimagefield',
+    'bootstrap5',
+    'fontawesome_5',
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,25 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-crispy-forms = "*"
+crispy-bootstrap5 = "*"
+django-debug-toolbar = "*"
+django-allauth = "*"
+djangorestframework = "*"
+markdown = "*"
+django-filter = "*"
+drf-yasg = "*"
+django-versatileimagefield = "*"
+django-registration = "*"
+djangorestframework-simplejwt = "*"
+django-bootstrap-v5 = "*"
+django-fontawesome-5 = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.11"

@@ -1,39 +1,41 @@
 {% extends 'base.html' %}
 {% load blog_extras %}
 {% load blog_extras cache %}
+{% load static %}
 {% block content %}
-<h2>{{ post.title }}</h2>
-{% row %}
-    <div class="col">
-        {% include 'blog/post-byline.html' %}
+
+<br>
+<div class="container">
+    <div class="card text-dark bg-light mb-3">
+        <div class="card-header">
+            {{ post.title }}
+        </div>
+        <div class="card-body">
+            {% if post.hero_image %}
+                <img class="card-img-top img-fluid" style="max-height:300px;max-width:300px;" src="{{ post.hero_image.url }}">
+            {% endif %}
+            <p class="card-text">{{ post.summary }}</p>
+            <p class="lead">{% include 'blog/post-byline.html' %}</p>
+        </div>
     </div>
-{% endrow %}
-{% if post.hero_image %}
+    <div class="post-blog">
+        <p style="text-align: justify;">{{ post.content|safe }}</p>
+    </div>
+    {% if post.author.profile %}
+        {% row %}
+            {% col %}
+                <h4>About the author</h4>
+                <p>{{ post.author.profile.bio }}</p>
+            {% endcol %}
+        {% endrow %}
+    {% endif %}
+    {% include "blog/post-comments.html" %}
     {% row %}
         {% col %}
-            <img class="img-fluid" src="{{ post.hero_image.url }}">
+            {% cache 3600 recent_posts post %}
+                {% recent_posts post %}
+            {% endcache %}
         {% endcol %}
     {% endrow %}
-{% endif %}
-{% row %}
-    <div class="col">
-        {{ post.content|safe }}
-    </div>
-{% endrow %}
-{% if post.author.profile %}
-    {% row %}
-        {% col %}
-            <h4>About the author</h4>
-            <p>{{ post.author.profile.bio }}</p>
-        {% endcol %}
-    {% endrow %}
-{% endif %}
-{% include "blog/post-comments.html" %}
-{% row %}
-    {% col %}
-        {% cache 3600 recent_posts post %}
-            {% recent_posts post %}
-        {% endcache %}
-    {% endcol %}
-{% endrow %}
+</div>
 {% endblock %}

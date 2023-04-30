@@ -8,6 +8,8 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags blog_extras %}
 {% block title %}Log In My Blog{% endblock %}
+{% load static %}
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
 {% block content %}
 <div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.1);">
 {% row "justify-content-center" %}

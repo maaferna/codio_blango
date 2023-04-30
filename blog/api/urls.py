@@ -1,4 +1,5 @@
 from django.urls import path, include, re_path
+
 from rest_framework.urlpatterns import format_suffix_patterns
 from rest_framework.authtoken import views
 from rest_framework.routers import DefaultRouter
@@ -15,7 +16,7 @@ schema_view = get_schema_view(openapi.Info(
     title="Blango API",
     default_version="v1",
     description="API for Blango Blog",),
-    url=r"http://127.0.0.1:8000/api/v1/",public=True,)
+    url=r"http://127.0.0.1:8000/api/",public=True,)
 
 urlpatterns = [path("users/<str:email>", UserDetail.as_view(),name="api_user_detail"),]
 
@@ -38,6 +39,3 @@ urlpatterns += [
     path("", include(router.urls)),
     path("posts/by-time/<str:period_name>/",PostViewSet.as_view({"get": "list"}),name="posts-by-time",),
 ]
-
-
-

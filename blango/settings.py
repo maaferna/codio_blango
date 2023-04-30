@@ -213,9 +213,6 @@ default_cache = caches["default"]
 from django.core.cache import cache
 # cache is the equivalent of caches["default"]/our default_cache variable
 
-
-
-
 '''
 CACHES = {
 "default": {

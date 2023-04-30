@@ -15,6 +15,7 @@ Including another URLconf
 """
 
 import blog.views
+import blog.api_views
 import debug_toolbar
 from django.conf import settings
 from django.contrib import admin
@@ -35,7 +36,7 @@ urlpatterns = [
     path("accounts/profile/", blango_auth.views.profile,name="profile"),
     path("accounts/register/",RegistrationView.as_view(form_class=BlangoRegistrationForm),name="django_registration_register",),
     path("accounts/",include("django_registration.backends.activation.urls")),
-    path("api/v1/", include("blog.api.urls")),
+    path("api/", include("blog.api.urls")),
     path("post-table/", blog.views.post_table, name="blog-post-table"),
 ]
 
@@ -44,5 +45,3 @@ if settings.DEBUG:
 	urlpatterns += [path("__debug__/", include(debug_toolbar.urls)),
 ] + static(settings.MEDIA_URL,
 document_root=settings.MEDIA_ROOT)
-
-

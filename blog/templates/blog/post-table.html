@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 {% load static %}
+<link rel="stylesheet" href="{% static "css/styles.css" %}">
 {% block content %}
-{% block title %}Post Table{% endblock %}
+
+<div class="container">
+  <h1>Post Table Detail</h1>
     <div class="row">
         <div class="col">
             <div id="react_root"></div>
         </div>
     </div>
-    
+</div>
     <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>

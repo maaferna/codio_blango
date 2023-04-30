@@ -9,7 +9,7 @@
 {% load crispy_forms_tags blog_extras %}
 {% block title %}Log In My Blog{% endblock %}
 {% block content %}
-<div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.1); "">
+<div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.1);">
 {% row "justify-content-center" %}
 	{% col "col-md-10" %}
 		{% if next %}
@@ -22,7 +22,7 @@
 	{% endcol %}
 {% endrow %}
 </div>
-<div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.1); "">
+<div class="container" style="border:1px solid #cecece; box-shadow: 0 0 14px 10px rgba(0, 0, 0, 0.1);">
 {% row "justify-content-center" %}
 	{% col "col-md-10" %}
 		<form method="post" action="{% url "login" %}">

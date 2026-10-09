@@ -26,6 +26,7 @@ Bootstrap 5 · crispy-forms · Pipenv
 
 ```bash
 pipenv install            # or: pip install -r requirements.txt
+export DJANGO_DEBUG=True    # settings read DJANGO_SECRET_KEY, DJANGO_DEBUG, DJANGO_ALLOWED_HOSTS (.env.example)
 python manage.py migrate
 python manage.py runserver
 ```

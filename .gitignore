@@ -1,1 +1,7 @@
 */__pycache__/*
+
+# Local artifacts and secrets
+__pycache__/
+*.pyc
+.env
+db.sqlite3
